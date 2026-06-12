@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ひさし｜道具屋カタログ</title>
+<meta name="description" content="ちょっとした“面倒くさい”を、道具で解決する。業務改善ツールが趣味になった会社員の道具屋。カタログから道具を触ってみてください。" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root {
+    --bg: #faf6f1;
+    --bg-soft: #f3ecdf;
+    --ink: #2b241c;
+    --ink-soft: #6b5d4d;
+    --accent: #c4724f;
+    --accent-soft: #e9b894;
+    --line: #e3d8c5;
+    --ok: #6a8f5d;
+    --warn: #c98a3a;
+    --danger: #c25b4a;
+  }
+  html, body { background: var(--bg); color: var(--ink); }
+  body {
+    font-family: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", "Yu Gothic", "Noto Sans JP", -apple-system, BlinkMacSystemFont, sans-serif;
+    font-feature-settings: "palt";
+    letter-spacing: 0.01em;
+    line-height: 1.85;
+    word-break: auto-phrase;
+  }
+  .ink { color: var(--ink); }
+  .ink-soft { color: var(--ink-soft); }
+  .bg-soft { background: var(--bg-soft); }
+  .border-line { border-color: var(--line); }
+  .accent { color: var(--accent); }
+  .bg-accent { background: var(--accent); }
+  .bg-accent-soft { background: var(--accent-soft); }
+  .ring-accent { box-shadow: 0 0 0 2px var(--accent); }
+  .fade-in { animation: fade 0.45s ease both; }
+  @keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+  .dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+  .jp p, .jp h1, .jp h2 { word-break: normal; overflow-wrap: normal; }
+  .ph { display: inline; }
+  @media (min-width: 768px) { .ph { display: inline-block; } }
+  input[type=range] { -webkit-appearance: none; appearance: none; background: transparent; }
+  input[type=range]::-webkit-slider-runnable-track { height: 4px; background: var(--line); border-radius: 9999px; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--accent); margin-top: -6px; cursor: pointer; }
+  input[type=range]::-moz-range-track { height: 4px; background: var(--line); border-radius: 9999px; }
+  input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: var(--accent); border: 0; cursor: pointer; }
+  .verdict-buy { color: var(--ok); }
+  .verdict-mid { color: var(--warn); }
+  .verdict-no { color: var(--danger); }
+  /* カタログ用 */
+  .badge { font-size: 10px; border-radius: 9999px; padding: 2px 10px; font-weight: 700; letter-spacing: 0.06em; }
+  .badge-open { background: var(--ok); color: #fff; }
+  .badge-dev { background: var(--warn); color: #fff; }
+  .badge-idea { background: transparent; color: var(--ink-soft); border: 1px solid var(--line); }
+  .badge-wanted { background: var(--accent); color: #fff; }
+  .tool-card { transition: transform .2s ease, box-shadow .2s ease; }
+  .tool-card:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(43,36,28,.08); }
+  .no-tag { font-size: 11px; letter-spacing: 0.18em; color: var(--ink-soft); }
+</style>
+</head>
+<body class="leading-relaxed">
+
+<!-- HERO -->
+<header class="px-6 md:px-10 pt-14 md:pt-24 pb-16 md:pb-24">
+  <div class="max-w-5xl mx-auto">
+    <div class="flex items-center gap-2 text-sm ink-soft mb-6">
+      <span class="dot bg-accent"></span>
+      <span>ひさし｜道具屋 / @biz_kaizen</span>
+    </div>
+    <h1 class="text-3xl md:text-5xl font-bold leading-snug md:leading-tight mb-6">
+      ちょっとした<span class="accent">“面倒くさい”</span>を、<br />
+      道具で解決する。
+    </h1>
+    <p class="text-base md:text-lg ink-soft max-w-2xl mb-10 jp">
+      <span class="ph">業務改善ツールが趣味になった、</span><span class="ph">会社員の道具屋です。</span>
+      <span class="ph">「この作業、毎回めんどうだな」を、</span><span class="ph">小さな道具にして</span><span class="ph">ここに並べています。</span>
+      <span class="ph">気になる道具があれば、</span><span class="ph">どうぞ手に取ってみてください。</span>
+    </p>
+    <div class="flex flex-wrap gap-3">
+      <a href="#catalog" class="px-5 py-3 rounded-full bg-accent text-white text-sm md:text-base hover:opacity-90 transition">カタログを見る</a>
+      <a href="https://x.com/biz_kaizen" target="_blank" rel="noopener" class="px-5 py-3 rounded-full border border-line ink hover:bg-soft transition text-sm md:text-base">Xで相談する →</a>
+    </div>
+  </div>
+</header>
+
+<!-- 店主 -->
+<section class="px-6 md:px-10 py-16 bg-soft border-y border-line">
+  <div class="max-w-3xl mx-auto">
+    <p class="text-xs tracking-widest ink-soft mb-3">店主について</p>
+    <h2 class="text-2xl md:text-3xl font-bold mb-6">はじめまして、ひさしです。</h2>
+    <p class="ink-soft mb-4 jp">
+      <span class="ph">会社員エンジニアとして働きながら、</span><span class="ph">業務改善ツールづくりが</span><span class="ph">趣味になった道具屋です。</span>
+      <span class="ph">面倒な作業や悩ましい判断を、</span><span class="ph">小さな道具に変えています。</span>
+    </p>
+    <p class="ink-soft mb-8 jp">
+      <span class="ph">きっかけは、知り合いから</span><span class="ph">「副業の判断がめんどう」</span><span class="ph">と相談されたこと。</span>
+      <span class="ph">面倒なデータ集めは道具に任せて、</span><span class="ph">勝負どころの「で、やる？」だけに</span><span class="ph">集中できるようにする。</span>
+      <span class="ph">そんな道具を増やしています。</span>
+      <span class="ph">本業で培った経験から、</span><span class="ph">道具づくりでは</span><span class="ph">セキュリティ面にも配慮しています。</span>
+    </p>
+    <dl class="grid grid-cols-[6rem_1fr] md:grid-cols-[8rem_1fr] gap-y-3 text-sm md:text-base">
+      <dt class="ink-soft">スタンス</dt><dd>会社員エンジニア × 道具屋</dd>
+      <dt class="ink-soft">発信</dt><dd><a class="accent underline underline-offset-4" href="https://x.com/biz_kaizen" target="_blank" rel="noopener">@biz_kaizen</a></dd>
+      <dt class="ink-soft">テーマ</dt><dd>“面倒くさい”を解決する道具を開発中</dd>
+      <dt class="ink-soft">拠点</dt><dd>大阪</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- CATALOG -->
+<section id="catalog" class="px-6 md:px-10 py-20">
+  <div class="max-w-5xl mx-auto">
+    <p class="text-xs tracking-widest ink-soft mb-3">CATALOG</p>
+    <h2 class="text-2xl md:text-3xl font-bold mb-3">道具カタログ</h2>
+    <p class="ink-soft mb-12 jp">
+      <span class="ph">それぞれの道具は、</span><span class="ph">実際にあった「面倒くさい」から生まれています。</span>
+      <span class="ph">公開中の道具は、</span><span class="ph">このページでそのまま触れます。</span>
+    </p>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+      <!-- No.001 -->
+      <a href="#tool-001" class="tool-card flex flex-col p-6 rounded-2xl bg-white border border-line">
+        <div class="flex items-center justify-between mb-3">
+          <span class="no-tag">No.001</span>
+          <span class="badge badge-open">公開中・触れる</span>
+        </div>
+        <p class="text-lg font-bold mb-2">+EV判定エンジン</p>
+        <p class="text-xs ink-soft mb-3 jp"><span class="accent font-bold">解決する面倒：</span><span class="ph">「この仕入れ、得か損か」を</span><span class="ph">毎回電卓と勘で考えるのが面倒。</span></p>
+        <p class="text-sm ink-soft jp flex-1"><span class="ph">手数料・送料・売れる確率・資金回転まで</span><span class="ph">一気に計算して、</span><span class="ph">「仕入れる/条件付き/見送り」を判定。</span></p>
+        <p class="text-xs accent font-bold mt-4">▼ このページで試せます</p>
+      </a>
+
+      <!-- No.002 -->
+      <div class="tool-card flex flex-col p-6 rounded-2xl bg-white border border-line">
+        <div class="flex items-center justify-between mb-3">
+          <span class="no-tag">No.002</span>
+          <span class="badge badge-dev">開発中</span>
+        </div>
+        <p class="text-lg font-bold mb-2">スプレッドシート自動集計ダッシュボード</p>
+        <p class="text-xs ink-soft mb-3 jp"><span class="accent font-bold">解決する面倒：</span><span class="ph">毎週・毎月の手集計と</span><span class="ph">報告用の表づくりが面倒。</span></p>
+        <p class="text-sm ink-soft jp flex-1"><span class="ph">入力したデータを自動で集計して、</span><span class="ph">売上・在庫・利益・進捗を</span><span class="ph">見える化するダッシュボード。</span></p>
+        <p class="text-xs ink-soft mt-4">入荷をお楽しみに</p>
+      </div>
+
+      <!-- No.003 -->
+      <div class="tool-card flex flex-col p-6 rounded-2xl bg-white border border-line">
+        <div class="flex items-center justify-between mb-3">
+          <span class="no-tag">No.003</span>
+          <span class="badge badge-idea">構想中</span>
+        </div>
+        <p class="text-lg font-bold mb-2">商品リサーチ補助</p>
+        <p class="text-xs ink-soft mb-3 jp"><span class="accent font-bold">解決する面倒：</span><span class="ph">候補探しでタブを何十個も開いて</span><span class="ph">見比べるのが面倒。</span></p>
+        <p class="text-sm ink-soft jp flex-1"><span class="ph">候補集めと下調べを肩代わりして、</span><span class="ph">No.001のエンジンに流し込む。</span><span class="ph">リサーチから判定までを一本の流れに。</span></p>
+        <p class="text-xs ink-soft mt-4">設計図を描いています</p>
+      </div>
+
+      <!-- No.004 -->
+      <div class="tool-card flex flex-col p-6 rounded-2xl bg-white border border-line">
+        <div class="flex items-center justify-between mb-3">
+          <span class="no-tag">No.004</span>
+          <span class="badge badge-idea">構想中</span>
+        </div>
+        <p class="text-lg font-bold mb-2">議事録・作業メモの自動要約</p>
+        <p class="text-xs ink-soft mb-3 jp"><span class="accent font-bold">解決する面倒：</span><span class="ph">会議メモの清書と共有が面倒。</span></p>
+        <p class="text-sm ink-soft jp flex-1"><span class="ph">走り書きのメモを渡すと、</span><span class="ph">決定事項・宿題・期限に整理して</span><span class="ph">そのまま共有できる形にする。</span></p>
+        <p class="text-xs ink-soft mt-4">設計図を描いています</p>
+      </div>
+
+      <!-- No.005 -->
+      <div class="tool-card flex flex-col p-6 rounded-2xl bg-white border border-line">
+        <div class="flex items-center justify-between mb-3">
+          <span class="no-tag">No.005</span>
+          <span class="badge badge-idea">構想中</span>
+        </div>
+        <p class="text-lg font-bold mb-2">問い合わせ返信の下書きツール</p>
+        <p class="text-xs ink-soft mb-3 jp"><span class="accent font-bold">解決する面倒：</span><span class="ph">似たような問い合わせに</span><span class="ph">毎回ゼロから返信を書くのが面倒。</span></p>
+        <p class="text-sm ink-soft jp flex-1"><span class="ph">過去のやりとりと判断の癖を覚えて、</span><span class="ph">返信案を3つ提示。</span><span class="ph">人は選んで整えるだけ。</span></p>
+        <p class="text-xs ink-soft mt-4">設計図を描いています</p>
+      </div>
+
+      <!-- 募集枠 -->
+      <a href="https://x.com/biz_kaizen" target="_blank" rel="noopener" class="tool-card flex flex-col p-6 rounded-2xl border-2 border-dashed border-line bg-transparent">
+        <div class="flex items-center justify-between mb-3">
+          <span class="no-tag">No.0XX</span>
+          <span class="badge badge-wanted">面倒、募集中</span>
+        </div>
+        <p class="text-lg font-bold mb-2">あなたの「面倒くさい」</p>
+        <p class="text-sm ink-soft jp flex-1"><span class="ph">次にカタログへ並ぶのは、</span><span class="ph">あなたの面倒かもしれません。</span><span class="ph">「この作業、めんどう」のひと言で大丈夫。</span><span class="ph">XのDMで聞かせてください。</span></p>
+        <p class="text-xs accent font-bold mt-4">DMで相談する →</p>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- TOOL DETAIL No.001 -->
+<section id="tool-001" class="px-6 md:px-10 py-20 bg-soft border-y border-line">
+  <div class="max-w-5xl mx-auto">
+    <p class="text-xs tracking-widest ink-soft mb-3">PICK UP — No.001</p>
+    <div class="flex flex-wrap items-baseline gap-3 mb-2">
+      <h2 class="text-2xl md:text-3xl font-bold">+EV判定エンジン</h2>
+      <span class="badge badge-open">公開中・触れる</span>
+      <span class="text-[10px] bg-accent text-white rounded-full px-2 py-0.5">最初の題材：物販（せどり）</span>
+    </div>
+    <p class="ink-soft mb-8 text-sm md:text-base jp">
+      <span class="ph">「価格差」ではなく、</span><span class="ph">コスト・確率・資金回転まで織り込んだ</span><span class="ph">「本当に+EV（プラス期待値）か」で判定する道具。</span>
+      <span class="ph">中身はジャンル不問。</span><span class="ph">まずは検証の速い物販で形にしています。</span><br/>
+      <span class="ph">※デモはダミーデータで動きます。</span><span class="ph">「儲かる商品」そのものは出しません（公開した時点でエッジが消えるので）。</span>
+    </p>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+      <div class="p-5 rounded-2xl bg-white border border-line">
+        <p class="text-xs tracking-widest ink-soft mb-2">こんな面倒が</p>
+        <p class="text-sm jp"><span class="ph">仕入れ候補が並んでも、</span><span class="ph">どれに資金を使うのが一番得か、</span><span class="ph">結局は勘で決めている。</span><span class="ph">赤字や売れ残りも避けたい。</span></p>
+      </div>
+      <div class="p-5 rounded-2xl bg-white border border-line">
+        <p class="text-xs tracking-widest ink-soft mb-2">こう解きました</p>
+        <p class="text-sm jp"><span class="ph">全コストと需要・資金回転を一気に計算して、</span><span class="ph">「仕入れる / 条件付き / 見送り」を判定。</span><span class="ph">候補を期待利益の順に並べ、</span><span class="ph">どれから手をつけるかまで出します。</span></p>
+      </div>
+    </div>
+
+    <!-- DEMO: 単体判定 -->
+    <div class="p-5 md:p-7 rounded-2xl bg-white border border-line mb-6">
+      <div class="flex items-center justify-between mb-5">
+        <p class="text-xs tracking-widest ink-soft">触れるデモ ①：手元の1品を判定</p>
+        <span class="text-[10px] ink-soft border border-line rounded-full px-2 py-0.5">ダミーデータ</span>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- 入力 -->
+        <div class="space-y-4">
+          <div>
+            <div class="flex items-center justify-between mb-1"><span class="text-xs ink-soft">仕入れ値</span><span class="text-sm"><span id="v-cost">10,000</span> 円</span></div>
+            <input id="i-cost" type="range" min="1000" max="40000" step="500" value="10000" class="w-full" />
+          </div>
+          <div>
+            <div class="flex items-center justify-between mb-1"><span class="text-xs ink-soft">想定売値</span><span class="text-sm"><span id="v-sell">14,000</span> 円</span></div>
+            <input id="i-sell" type="range" min="1000" max="60000" step="500" value="14000" class="w-full" />
+          </div>
+          <div>
+            <div class="flex items-center justify-between mb-1"><span class="text-xs ink-soft">販売手数料</span><span class="text-sm"><span id="v-fee">10</span> %</span></div>
+            <input id="i-fee" type="range" min="0" max="20" step="1" value="10" class="w-full" />
+          </div>
+          <div>
+            <div class="flex items-center justify-between mb-1"><span class="text-xs ink-soft">送料・梱包</span><span class="text-sm"><span id="v-ship">800</span> 円</span></div>
+            <input id="i-ship" type="range" min="0" max="3000" step="50" value="800" class="w-full" />
+          </div>
+          <div>
+            <div class="flex items-center justify-between mb-1"><span class="text-xs ink-soft">売れる確率（90日内）</span><span class="text-sm"><span id="v-prob">55</span> %</span></div>
+            <input id="i-prob" type="range" min="10" max="100" step="5" value="55" class="w-full" />
+          </div>
+          <div>
+            <div class="flex items-center justify-between mb-1"><span class="text-xs ink-soft">想定の資金回転</span><span class="text-sm"><span id="v-days">35</span> 日</span></div>
+            <input id="i-days" type="range" min="7" max="120" step="1" value="35" class="w-full" />
+          </div>
+        </div>
+        <!-- 結果 -->
+        <div id="single-result" class="flex flex-col"></div>
+      </div>
+    </div>
+
+    <!-- DEMO: ランキング -->
+    <div class="p-5 md:p-7 rounded-2xl bg-white border border-line">
+      <div class="flex items-center justify-between mb-1">
+        <p class="text-xs tracking-widest ink-soft">触れるデモ ②：候補に優先順位をつける</p>
+        <span class="text-[10px] ink-soft border border-line rounded-full px-2 py-0.5">ダミーデータ</span>
+      </div>
+      <p class="text-xs ink-soft mb-5 jp"><span class="ph">同じエンジンに6つの候補を通すと、</span><span class="ph">期待利益の高い順に並びます。</span><span class="ph">行をタップすると、</span><span class="ph">なぜその判定かが出ます。</span></p>
+      <div id="rank-list" class="space-y-2"></div>
+      <div id="rank-detail" class="mt-4"></div>
+    </div>
+
+    <p class="mt-6 text-sm ink-soft jp"><span class="accent font-bold">こうなりました　</span><span class="ph">「価格差はあるのに見送るべき仕入れ」が、</span><span class="ph">数字でハッキリ分かる。</span><span class="ph">限られた資金を、</span><span class="ph">一番+EVな候補に回せます。</span></p>
+    <p class="mt-3 text-xs ink-soft jp"><span class="ph">この「全コスト・確率・時間まで見て判断する」考え方は物販に限らず、</span><span class="ph">案件の見極めやポイ活など、</span><span class="ph">いろんな“やる？やらない？”にそのまま使えます。</span></p>
+  </div>
+</section>
+
+<!-- PRINCIPLES -->
+<section class="px-6 md:px-10 py-20">
+  <div class="max-w-3xl mx-auto">
+    <p class="text-xs tracking-widest ink-soft mb-3">道具づくりの流儀</p>
+    <h2 class="text-2xl md:text-3xl font-bold mb-10">大事にしてること</h2>
+    <ol class="space-y-6">
+      <li>
+        <p class="text-lg font-bold mb-1">実際にあった「面倒」から作る。</p>
+        <p class="text-sm ink-soft jp"><span class="ph">技術の見せ場より、</span><span class="ph">誰かの「これ、めんどう」が出発点。</span><span class="ph">カタログの道具は、</span><span class="ph">ぜんぶ実在の面倒から生まれています。</span></p>
+      </li>
+      <li>
+        <p class="text-lg font-bold mb-1">安心して使える道具にする。</p>
+        <p class="text-sm ink-soft jp"><span class="ph">エンジニアの本業で培った経験を活かし、</span><span class="ph">データの扱いなど</span><span class="ph">セキュリティ面にも配慮して作ります。</span></p>
+      </li>
+      <li>
+        <p class="text-lg font-bold mb-1">むずかしい計算は、道具の中に。</p>
+        <p class="text-sm ink-soft jp"><span class="ph">数式を覚える必要はありません。</span><span class="ph">面倒な計算とデータ集めはぜんぶ道具に任せて、</span><span class="ph">あなたは「やる/やらない」の判断に</span><span class="ph">集中できます。</span></p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="px-6 md:px-10 py-20 bg-soft border-t border-line">
+  <div class="max-w-3xl mx-auto text-center">
+    <h2 class="text-2xl md:text-3xl font-bold mb-4">「この作業、めんどう」のひと言から、どうぞ。</h2>
+    <p class="ink-soft mb-8 text-sm md:text-base jp"><span class="ph">面倒な作業や悩ましい判断を</span><span class="ph">ラクにする道具のご相談、</span><span class="ph">XのDMで受けつけてます。</span><br/><span class="ph">軽い入口で全然OKです。</span></p>
+    <a href="https://x.com/biz_kaizen" target="_blank" rel="noopener" class="inline-block px-6 py-3 rounded-full bg-accent text-white hover:opacity-90 transition">XのDMで相談する →</a>
+  </div>
+</section>
+
+<footer class="px-6 md:px-10 py-10 text-center text-xs ink-soft">
+  © ひさし｜道具屋カタログ
+</footer>
+
+<script>
+/* ===== 共通：EV計算ロジック ===== */
+function evCalc(cost, sell, feePct, ship, probPct, days) {
+  const fee = sell * feePct / 100;
+  const net = sell - cost - fee - ship;            // 売れたときの純利益
+  const margin = net / cost * 100;                 // 利益率(対仕入れ)
+  const p = probPct / 100;
+  const ev = net * p;                              // 期待純利益
+  const monthlyRoi = (ev / cost) / (days / 30) * 100; // 資金の月利換算
+  return { fee, net, margin, ev, monthlyRoi };
+}
+function judge(r) {
+  if (r.ev <= 0 || r.net <= 0) return { key: "no",  label: "見送り",  cls: "verdict-no",  color: "var(--danger)" };
+  if (r.monthlyRoi >= 15 && r.net >= 1500) return { key: "buy", label: "仕入れる", cls: "verdict-buy", color: "var(--ok)" };
+  if (r.monthlyRoi >= 6) return { key: "mid", label: "条件付き", cls: "verdict-mid", color: "var(--warn)" };
+  return { key: "no", label: "見送り", cls: "verdict-no", color: "var(--danger)" };
+}
+const yen = n => Math.round(n).toLocaleString("ja-JP");
+
+/* ===== デモ①：単体判定 ===== */
+const ids = ["cost","sell","fee","ship","prob","days"];
+function readSingle() {
+  const g = id => +document.getElementById("i-"+id).value;
+  return { cost:g("cost"), sell:g("sell"), fee:g("fee"), ship:g("ship"), prob:g("prob"), days:g("days") };
+}
+function renderSingle() {
+  const s = readSingle();
+  document.getElementById("v-cost").textContent = yen(s.cost);
+  document.getElementById("v-sell").textContent = yen(s.sell);
+  document.getElementById("v-fee").textContent  = s.fee;
+  document.getElementById("v-ship").textContent = yen(s.ship);
+  document.getElementById("v-prob").textContent = s.prob;
+  document.getElementById("v-days").textContent = s.days;
+
+  const r = evCalc(s.cost, s.sell, s.fee, s.ship, s.prob, s.days);
+  const v = judge(r);
+  const box = document.getElementById("single-result");
+  box.innerHTML = `
+    <div class="fade-in flex flex-col h-full">
+      <div class="rounded-2xl border border-line p-5 text-center mb-4" style="background:var(--bg)">
+        <p class="text-[11px] tracking-widest ink-soft mb-1">判定</p>
+        <p class="text-3xl font-bold ${v.cls}">${v.label}</p>
+      </div>
+      <div class="grid grid-cols-2 gap-2 text-center">
+        <div class="p-3 rounded-xl bg-soft border border-line">
+          <p class="text-[10px] ink-soft mb-1">純利益（売れたら）</p>
+          <p class="text-base font-bold ink">${yen(r.net)}<span class="text-xs ink-soft font-normal">円</span></p>
+        </div>
+        <div class="p-3 rounded-xl bg-soft border border-line">
+          <p class="text-[10px] ink-soft mb-1">利益率</p>
+          <p class="text-base font-bold ink">${r.margin.toFixed(0)}<span class="text-xs ink-soft font-normal">%</span></p>
+        </div>
+        <div class="p-3 rounded-xl bg-soft border border-line">
+          <p class="text-[10px] ink-soft mb-1">期待利益（確率込み）</p>
+          <p class="text-base font-bold" style="color:${v.color}">${yen(r.ev)}<span class="text-xs ink-soft font-normal">円</span></p>
+        </div>
+        <div class="p-3 rounded-xl bg-soft border border-line">
+          <p class="text-[10px] ink-soft mb-1">資金の月利換算</p>
+          <p class="text-base font-bold" style="color:${v.color}">${r.monthlyRoi.toFixed(1)}<span class="text-xs ink-soft font-normal">%</span></p>
+        </div>
+      </div>
+      <p class="text-[11px] ink-soft mt-3 jp">${hint(r, v)}</p>
+    </div>`;
+}
+function hint(r, v) {
+  if (v.key === "buy") return "コスト・需要・回転のどれを見ても十分。資金を回す価値あり。";
+  if (v.key === "mid") return "利益は出るが、回転か確率に弱さあり。仕入れ値を抑えるか、回転を上げたい。";
+  if (r.net <= 0) return "手数料と送料を引くと、売れても赤字。数字上は触ってはいけない候補。";
+  return "売れたときの利益はあるが、売れる確率か資金回転が悪く、期待値・月利が見合わない。";
+}
+ids.forEach(id => document.getElementById("i-"+id).addEventListener("input", renderSingle));
+
+/* ===== デモ②：ランキング ===== */
+const CANDS = [
+  { name:"限定トレカ",       cost:4200,  sell:7800,  fee:10, ship:250,  prob:72, days:21 },
+  { name:"中古ゲーム機",     cost:8800,  sell:13200, fee:10, ship:700,  prob:66, days:28 },
+  { name:"人気スニーカー",   cost:13500, sell:18200, fee:10, ship:800,  prob:58, days:35 },
+  { name:"ブランド小物",     cost:18000, sell:24000, fee:12, ship:900,  prob:40, days:75 },
+  { name:"型落ち家電",       cost:22000, sell:26500, fee:15, ship:1200, prob:65, days:28 },
+  { name:"在庫処分の雑貨",   cost:3000,  sell:3600,  fee:10, ship:350,  prob:80, days:30 },
+];
+const NOTES = {
+  "限定トレカ":"需要が厚く資金回転も速い。文句なしの+EV。",
+  "中古ゲーム機":"利益率・回転ともに良好。資金を回す価値あり。",
+  "人気スニーカー":"利益は出るが回転がやや遅い。仕入れ値を抑えられれば仕入れたい。",
+  "ブランド小物":"純利益は一番大きいが、資金が約2.5か月寝る。月利で見ると弱く、優先度は下げるべき。",
+  "型落ち家電":"手数料15%が重く、売れても利益がほぼ消える。価格差の罠。",
+  "在庫処分の雑貨":"送料と手数料で赤字。価格差はあっても触ってはいけない。"
+};
+function renderRank() {
+  const rows = CANDS.map(c => {
+    const r = evCalc(c.cost, c.sell, c.fee, c.ship, c.prob, c.days);
+    return { ...c, ...r, v: judge(r) };
+  }).sort((a,b) => b.ev - a.ev);
+  const list = document.getElementById("rank-list");
+  list.innerHTML = rows.map((r,i) => `
+    <button data-name="${r.name}" class="rank-row w-full text-left p-3 rounded-xl bg-soft border border-line hover:bg-white transition">
+      <div class="flex items-center gap-3">
+        <span class="text-sm ink-soft w-5 text-center shrink-0">${i+1}</span>
+        <span class="text-sm ink flex-1">${r.name}</span>
+        <span class="text-xs ink-soft hidden sm:inline">期待利益 ${yen(r.ev)}円</span>
+        <span class="text-xs ink-soft hidden sm:inline">月利 ${r.monthlyRoi.toFixed(0)}%</span>
+        <span class="text-xs font-bold ${r.v.cls} w-16 text-right shrink-0">${r.v.label}</span>
+      </div>
+    </button>`).join("");
+  document.querySelectorAll(".rank-row").forEach(btn => {
+    btn.addEventListener("click", () => showRankDetail(btn.dataset.name, rows));
+  });
+}
+function showRankDetail(name, rows) {
+  const r = rows.find(x => x.name === name);
+  document.querySelectorAll(".rank-row").forEach(b => b.classList.toggle("ring-accent", b.dataset.name === name));
+  document.getElementById("rank-detail").innerHTML = `
+    <div class="fade-in p-4 rounded-xl bg-white border border-line">
+      <div class="flex items-center justify-between mb-3">
+        <p class="font-bold ink">${r.name}</p>
+        <span class="text-sm font-bold ${r.v.cls}">${r.v.label}</span>
+      </div>
+      <div class="grid grid-cols-4 gap-2 text-center mb-3">
+        <div><p class="text-[10px] ink-soft">純利益</p><p class="text-sm font-bold ink">${yen(r.net)}</p></div>
+        <div><p class="text-[10px] ink-soft">利益率</p><p class="text-sm font-bold ink">${r.margin.toFixed(0)}%</p></div>
+        <div><p class="text-[10px] ink-soft">期待利益</p><p class="text-sm font-bold" style="color:${r.v.color}">${yen(r.ev)}</p></div>
+        <div><p class="text-[10px] ink-soft">月利</p><p class="text-sm font-bold" style="color:${r.v.color}">${r.monthlyRoi.toFixed(0)}%</p></div>
+      </div>
+      <p class="text-[11px] ink-soft jp">${NOTES[r.name]}</p>
+    </div>`;
+}
+
+window.addEventListener("load", () => {
+  renderSingle();
+  renderRank();
+});
+</script>
+</body>
+</html>
